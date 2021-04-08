@@ -58,7 +58,7 @@ const login = async (req, res, next) => {
 const addPassword = async (req, res, next) => {
     const {title, username, password} = req.body
 
-    const key_public = new NodeRSA(process.env.PUBLIC_KEY)
+    const key_public = new NodeRSA(JOSN.parse(process.env.PUBLIC_KEY))
     const encryptedPassword = key_public.encrypt(password, 'base64')
 
     try {
@@ -103,8 +103,8 @@ const deletePassword = async (req, res, next) => {
 const editPassword = async (req, res, next) => {
     const {title, oldUsername, oldPassword, newUsername, password} = req.body
 
-    const key_public = new NodeRSA(process.env.PUBLIC_KEY)
-    const key_private = new NodeRSA(process.env.PRIVATE_KEY)
+    const key_public = new NodeRSA(JSON.parse(process.env.PUBLIC_KEY))
+    const key_private = new NodeRSA(JSON.parse(process.env.PRIVATE_KEY))
     const encryptedPassword = key_public.encrypt(password, 'base64')
 
     try {
@@ -166,7 +166,7 @@ const getPasswordList = async (req, res, next) => {
     const user = await User.findOne({name: userName})
     if(!user) return res.status(400).json({message: "User not found"})
 
-    const key_private = new NodeRSA(process.env.PRIVATE_KEY)
+    const key_private = new NodeRSA(JSON.parse(process.env.PRIVATE_KEY))
 
     let list = user.passwordList
     list.map(p => p.password = key_private.decrypt(p.password, 'utf8'))
