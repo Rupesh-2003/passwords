@@ -22,29 +22,6 @@ const createUser = async (req, res, next) => {
     res.status(200).json({message: "working"})
 } 
 
-const publicKey = '-----BEGIN PUBLIC KEY-----\n'+
-'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCEpS+XZCfhdBVl8EcyjF5zSyUN\n'+
-'y51cgWywD/qCV8+JPzz1vj5vdc3jhAd+dLd/jEoo1WnTA+HFRS2VLQqzW1uQ2sDX\n'+
-'1MGuqJOOixx74obLg4ss6o5fpQsYmkzJRsuTtFMyg/mekhuL5S6F+28vO6j0SCXd\n'+
-'LHPfK2JB34OlVSIWLwIDAQAB\n'+
-'-----END PUBLIC KEY-----'
-
-const privateKey = '-----BEGIN RSA PRIVATE KEY-----\n'+
-'MIICXAIBAAKBgQCEpS+XZCfhdBVl8EcyjF5zSyUNy51cgWywD/qCV8+JPzz1vj5v\n'+
-'dc3jhAd+dLd/jEoo1WnTA+HFRS2VLQqzW1uQ2sDX1MGuqJOOixx74obLg4ss6o5f\n'+
-'pQsYmkzJRsuTtFMyg/mekhuL5S6F+28vO6j0SCXdLHPfK2JB34OlVSIWLwIDAQAB\n'+
-'AoGAL8SQ8/MEjaNRRWmXKjP0m453JJWr8LFHI8xNSX035tQYLuM49si0wXc9f6Om\n'+
-'pU8vMa9RMcWXG4SDGtKipN6EhYUAC4lMAvgFm0v9/U0qP8DqErvv8tO8nqjUyNyY\n'+
-'QW5SpZJml3iXJy4royFo4IWeoo1yP0RqOzPnaBvsx858aMECQQD/Lv36ZI9rUYlq\n'+
-'rpV1o/nW9v1AQS2QPPowlRJbacRatdMA14SmUwRy3vtKcpSxtsrMmeGYEPz3alDd\n'+
-'c8axbs6hAkEAhRHUMq9W4k93gztDXFlmONUZM3RViyQcCFbdcaJT31Xvl6dpiTiB\n'+
-'UICqIB04qTdU297Ne8psHwFpJVOnzhPCzwJARBT4g+6CaSKG5CSSEaHfDWA2Lwd0\n'+
-'rY/nPED5ddQhJAZwtj/Jz0pE3JTrPHCXhVZ8gtvnWVfm9eeyjXLPJxWmIQJAPWYX\n'+
-'kfdjUHK4Qz3x+8doKirxQNOZsOTNZm+mJ4ttxaviLAhb4qvGxv1HAiBZh4J3TigE\n'+
-'iezBbKD7AfUShTyK8wJBALEpsWrzLG0DxC7SPakeEhR7CJyBhqXCubbLGe4oGjrz\n'+
-'0OK6OGpcDk2rsSa31frIeFqYwKfiwJrXZfsedQGpqjU=\n'+
-'-----END RSA PRIVATE KEY-----'
-
 const login = async (req, res, next) => {
     const {password} = req.body
     let user 
@@ -81,7 +58,7 @@ const login = async (req, res, next) => {
 const addPassword = async (req, res, next) => {
     const {title, username, password} = req.body
 
-    const key_public = new NodeRSA(publicKey)
+    const key_public = new NodeRSA(process.env.PUBLIC_KEY)
     const encryptedPassword = key_public.encrypt(password, 'base64')
 
     try {
@@ -126,8 +103,8 @@ const deletePassword = async (req, res, next) => {
 const editPassword = async (req, res, next) => {
     const {title, oldUsername, oldPassword, newUsername, password} = req.body
 
-    const key_public = new NodeRSA(publicKey)
-    const key_private = new NodeRSA(privateKey)
+    const key_public = new NodeRSA(process.env.PUBLIC_KEY)
+    const key_private = new NodeRSA(process.env.PRIVATE_KEY)
     const encryptedPassword = key_public.encrypt(password, 'base64')
 
     try {
@@ -189,7 +166,7 @@ const getPasswordList = async (req, res, next) => {
     const user = await User.findOne({name: userName})
     if(!user) return res.status(400).json({message: "User not found"})
 
-    const key_private = new NodeRSA(privateKey)
+    const key_private = new NodeRSA(process.env.PRIVATE_KEY)
 
     let list = user.passwordList
     list.map(p => p.password = key_private.decrypt(p.password, 'utf8'))
