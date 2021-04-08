@@ -9,8 +9,7 @@ const Container = styled.li`
     display:flex;
     padding-top: 9px;
     box-sizing: border-box;
-    /* background-color: ${props => props.color ? props.color : 'white'}; */
-    background-color: ${props => props.dark ? '#404040' : 'white'};
+    background-color: ${props => props.dark? '#404040' : props.color? props.color: 'white'};
     width: 100%;
     height: ${props => props.open ? 120: 40}px;
     font-family: Roboto;
@@ -228,7 +227,6 @@ const Item = (props) => {
             <br/>
             {open && !editMode &&
                 <Sublist dark={props.darkMode}>
-                    {/* <Subitem>{props.username} */}
                     <Subitem>{username}
                         <CopyToClipboard src={props.darkMode ? 'copyToClipboard2.svg' : 'copyToClipboard.svg'} onClick={() => navigator.clipboard.writeText(username)}/>
                     </Subitem>
