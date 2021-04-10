@@ -23,5 +23,10 @@
         <img width="200" src="logo.png" alt="Passwords" />
         </div>
     </div>
+    <script>
+      if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+      }
+    </script>
   </body>
 </html>
