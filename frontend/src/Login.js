@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
+import platform from 'platform'
 
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import Loader from './loader'
 import './Toggle.css'
 
@@ -122,40 +123,179 @@ const Copyright = styled.span`
     font-weight: 500;
     color: #404040;
 `
+const Slide = keyframes`
+    0% {
+      transform: translateX(-100px);
+    }
+    100% {
+      transform: skew(0deg);
+    }
+`
+const WarningDiv = styled.div`
+    width: 40%;
+    height: 20px;
+    margin-top: 30%;
+    background: #ffdb9b;
+    border-right: 7px solid #ffa502;
+    animation: ${Slide} 1s;
+    font-size: 14px;
+    padding-left: 5%;
+    display: flex;
+    align-items: center; 
+    color: #404040;   
+`
 
 const Login = () => {
 
+    const [locationPermission, setLocationPermission] = useState(false)
+
+    
+    useEffect(() => {
+        var ipAddress;
+        const fetchIp = async () => {
+            try {
+                const response = await fetch('https://api.ipify.org/?format=json', {
+                    method: 'GET'
+                })
+                const data = await response.json()
+                if(response.ok) {
+                    ipAddress = data.ip
+                }
+            } catch(error) {
+                console.log(error)
+            }
+        }
+        fetchIp()
+
+        // if permission is denied
+        function permissionDeniedhandler(err) {
+            if(err.code === 1) {
+                console.log("Error: Access is denied!");
+            } else if( err.code === 2) {
+                console.log("Error: Position is unavailable!");
+            }
+            setLocationPermission(false)
+        }
+
+        // if permission is given
+        function permissionGivenHandler(position) {
+
+            var current = new Date()
+
+            var apikey = 'fa6fe7305eba47f7b62d139d57fea61c';
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+          
+            var api_url = 'https://api.opencagedata.com/geocode/v1/json'
+          
+            var request_url = api_url
+              + '?'
+              + 'key=' + apikey
+              + '&q=' + encodeURIComponent(latitude + ',' + longitude)
+              + '&pretty=1'
+              + '&no_annotations=1';
+          
+            // send request to get address from longitude and latitude
+            var request = new XMLHttpRequest();
+            request.open('GET', request_url, true);
+          
+            request.onload = function() {
+
+                var data;
+
+                if (request.status === 200){ 
+                    // Success!
+                    data = JSON.parse(request.responseText);
+            
+                } else if (request.status <= 500){ 
+                    // We reached our target server, but it returned an error
+                                        
+                    data = JSON.parse(request.responseText);
+                    console.log("unable to geocode! Response code: " + request.status);
+                    console.log('error msg: ' + data.status.message);
+
+                } else {
+                    console.log("server error");
+                }
+
+                const log = {
+                    ipAddress: ipAddress,
+                    deviceDetails: platform.description,
+                    date: current.toLocaleDateString(),
+                    time: current.toLocaleTimeString(),
+                    latitude,
+                    longitude,
+                    location: data.results[0].formatted
+                }
+                console.log(log)
+            }
+          
+            request.onerror = function() {
+              // There was a connection error of some sort
+              console.log("unable to connect to server");        
+            };
+          
+            request.send();
+            setLocationPermission(true)
+        }
+        navigator.geolocation.getCurrentPosition(permissionGivenHandler, permissionDeniedhandler)
+    }, [])
+
     let history = useHistory()
 
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
     const [password, setPassword] = useState('')
+    const [loginError, setLoginError] = useState(false)
 
     //sending login request to backend
     const onLoginHandler = async () => {
         setLoading(true)
-        try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, {
-                method: "POST",
-                headers: {
-                    'Content-Type' : 'application/json'
-                },
-                body: JSON.stringify({
-                    password
+        if(password && locationPermission) {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type' : 'application/json'
+                    },
+                    body: JSON.stringify({
+                        password
+                    })
                 })
-            })
-            const data = await response.json()
-            if(response.ok) {
-                sessionStorage.setItem('loggedIn', true)
-                sessionStorage.setItem('accessToken', data.accessToken)
-                sessionStorage.setItem('darkMode', false)
-                window.location.href = `/home`
+                const data = await response.json()
+                if(response.ok) {
+                    sessionStorage.setItem('loggedIn', true)
+                    sessionStorage.setItem('accessToken', data.accessToken)
+                    sessionStorage.setItem('darkMode', false)
+                    window.location.href = `/home`
+                }
+                setLoginError(data.message)
+            }catch(err) {
+                console.log(err)
             }
-        }catch(err) {
-            console.log(err)
+        }
+        else if(!password) {
+            setLoginError("Password can't be blank !")
+        }
+        else {
+            setLoginError('Please Enable location !')
         }
         setLoading(false)
+        console.log(loginError)
     }
+
+    useEffect(() => {
+        const timeId = setTimeout(() => {
+          // After 3 seconds set the show value to false
+        //   setShow(false)
+        setLoginError(false)
+        }, 2000)
+    
+        return () => {
+          clearTimeout(timeId)
+        }
+      }, [loginError]);
+    
 
     return(
         <LoginContainer>
@@ -187,9 +327,32 @@ const Login = () => {
         <br/>
         <CancelButton onClick={() => history.goBack()}>Cancel</CancelButton>
         <br/>
-        <Copyright>@ 2021</Copyright>
-        
         </center>
+        {/* {loginError && */}
+                {/* <div className="alert showAlert">
+                    <img className="exclamation"
+                        src="./exclamation.svg"
+                        width="100%"
+                        height="100%"
+                        alt="exclamationMark"/>
+                    <span className="msg"></span>
+                    <div className="close-btn">
+                        <img src="./close.svg"
+                            width="100%"
+                            height="100%"
+                            alt="closeBtn"
+                            onClick={() => setLoginError(!loginError)}/>
+                    </div>
+                </div> */}
+
+                {loginError && 
+                <WarningDiv>
+                    {loginError}
+                </WarningDiv>}
+        <center>
+        <Copyright>@ 2021</Copyright>
+        </center>
+        
         </LoginContainer>
     )
 }
