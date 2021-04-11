@@ -96,8 +96,6 @@ const PlusImage = styled.img`
 `
 
 const Logout = styled.button`
-    left: 0;
-    right: 0;
     margin-left: auto;
     margin-right: auto;
     margin-top: 6%;
@@ -113,6 +111,9 @@ const Logout = styled.button`
     @media (min-width: 500px) {
         width: 30%;
         margin-top: 5%;
+    }
+    @media (min-height: 800px) {
+        margin-top: 18%;
     }
 `
 
