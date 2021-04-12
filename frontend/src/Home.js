@@ -264,14 +264,14 @@ const Home = () => {
     const onTitleChangeHandler = event => {
         dispatch({
             type: 'TITLE',
-            title: event.target.value,
+            title: event.target.value.split(' ').join('')
         })
     }
 
     const onUsernameChangeHandler = event => {
         dispatch({
             type: 'USERNAME',
-            username: event.target.value
+            username: event.target.value.split(' ').join('')
         })
 
     }
@@ -279,7 +279,7 @@ const Home = () => {
     const onPasswordChangeHandler = event => {
         dispatch({
             type: 'PASSWORD',
-            password: event.target.value
+            password: event.target.value.split(' ').join('')
         })
     }
 
@@ -457,7 +457,7 @@ const Home = () => {
             {list.length >0 && <Line/>}
             <AddNewItem open={open}>
                 <CheckImage src="/checkYellow.svg" alt="checkMark"/>
-                <ItemName>{AddNewItemState.isTitleValid ? AddNewItemState.title : "Add new"}</ItemName>
+                <ItemName>{open? AddNewItemState.isTitleValid ? AddNewItemState.title : "Add new" : "Add new"}</ItemName>
                 <PlusImage src="/plus.svg" alt="plusImage" onClick={() => setOpen(!open)} open={open}/>
                 {open && 
                     <Sublist>
