@@ -165,6 +165,15 @@ const Item = (props) => {
         if(askEditConfirmation)
             return
         if(editMode) {
+            if(username === "" || password === "") {
+                
+                setUsername(props.username)
+                setPassword(props.password)
+
+                console.log("username or password is blank")
+                setEditMode(!editMode)
+                return
+            }
             if(props.username === username && props.password === password){
                 setEditMode(!editMode)
                 return
@@ -245,10 +254,10 @@ const Item = (props) => {
             }
             {open && editMode && <Sublist>
                 <Input  defaultValue={username} 
-                        onChange={(e) => {setUsername(e.target.value)}}
+                        onChange={(e) => {setUsername(e.target.value.split(' ').join(''))}}
                         dark={props.darkMode}/>
                 <Input  defaultValue={password} 
-                        onChange={(e) => {setPassword(e.target.value)}}
+                        onChange={(e) => {setPassword(e.target.value.split(' ').join(''))}}
                         dark={props.darkMode}/>
             </Sublist>}
         {open && <Edit src={editMode?'right.svg': props.darkMode ? 'pen.png' : 'pen.svg'} width="15px" height="15px" onClick={onEditButtonHandler}/>}
