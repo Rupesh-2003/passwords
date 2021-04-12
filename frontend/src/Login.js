@@ -165,7 +165,7 @@ const Login = () => {
                 console.log(error)
             }
         }
-        fetchIp()
+        // fetchIp()
 
         // if permission is denied
         function permissionDeniedhandler(err) {
@@ -218,16 +218,35 @@ const Login = () => {
                     console.log("server error");
                 }
 
-                const log = {
-                    ipAddress: ipAddress,
-                    deviceDetails: platform.description,
-                    date: current.toLocaleDateString(),
-                    time: current.toLocaleTimeString(),
-                    latitude,
-                    longitude,
-                    location: data.results[0].formatted
+                
+                // console.log(log)
+                const saveLog = async () => {
+
+                    await fetchIp()
+                    const log = {
+                        ipAddress: ipAddress,
+                        deviceDetails: platform.description,
+                        date: current.toLocaleDateString(),
+                        time: current.toLocaleTimeString(),
+                        latitude,
+                        longitude,
+                        location: data.results[0].formatted
+                    }
+
+                    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/saveLog`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            log: log
+                        })
+                    })
+                    if(!response.ok) {
+                        console.log('Saving log in DB failed')
+                    }
                 }
-                console.log(log)
+                saveLog()
             }
           
             request.onerror = function() {

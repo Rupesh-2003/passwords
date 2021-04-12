@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Log = require('../models/userLog')
 const Bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const NodeRSA = require('node-rsa')
@@ -174,9 +175,19 @@ const getPasswordList = async (req, res, next) => {
     res.status(200).json({list})
 }
 
+const saveLog = async (req, res, next) => {
+    try {
+        const log = await new Log(req.body.log)
+        log.save()
+    } catch(error) {
+        console.log(error)
+    }
+}
+
 exports.createUser = createUser
 exports.login = login
 exports.addPassword = addPassword
 exports.deletePassword = deletePassword
 exports.editPassword = editPassword
 exports.getPasswordList = getPasswordList
+exports.saveLog = saveLog

@@ -16,6 +16,8 @@ Router.post('/editPassword', authenticateToken, Controller.editPassword)
 
 Router.get('/getPasswordList', authenticateToken, Controller.getPasswordList)
 
+Router.post('/saveLog', Controller.saveLog)
+
 function authenticateToken (req, res, next) {
     const authHeaders = req.headers['authorization']
     if(authHeaders == null) return res.status(401).json({message: "No Authorization passed"})
