@@ -142,7 +142,13 @@ const WarningDiv = styled.div`
     padding-left: 5%;
     display: flex;
     align-items: center; 
-    color: #404040;   
+    color: #404040; 
+    @media screen and (min-width: 500px) {
+        margin-top: 5%;
+        width: 15%;
+        padding-left: 2%;
+        color: black;
+    }  
 `
 
 const Login = () => {
@@ -347,23 +353,6 @@ const Login = () => {
         <CancelButton onClick={() => history.goBack()}>Cancel</CancelButton>
         <br/>
         </center>
-        {/* {loginError && */}
-                {/* <div className="alert showAlert">
-                    <img className="exclamation"
-                        src="./exclamation.svg"
-                        width="100%"
-                        height="100%"
-                        alt="exclamationMark"/>
-                    <span className="msg"></span>
-                    <div className="close-btn">
-                        <img src="./close.svg"
-                            width="100%"
-                            height="100%"
-                            alt="closeBtn"
-                            onClick={() => setLoginError(!loginError)}/>
-                    </div>
-                </div> */}
-
                 {loginError && 
                 <WarningDiv>
                     {loginError}
@@ -371,7 +360,6 @@ const Login = () => {
         <center>
         <Copyright>@ 2021</Copyright>
         </center>
-        
         </LoginContainer>
     )
 }
