@@ -1,5 +1,10 @@
 ## Passwords 
-Passwords is PWA for people who forget thier passwords. passwords stored in notepad or any other local software will be lost if it is not synced to cloud. 
+
+<p align="center">
+<img align="center" src="frontend/public/logo.png" width="300px">
+</p>
+
+**Passwords** is PWA for people who forget thier passwords. passwords stored in notepad or any other local software will be lost if it's not synced to cloud. 
 Storing passwords in Passwords directly stores data in your **mongoDB cloud** You can access this data from any device and anywhere after the PWA is hosted.
 
 ```
@@ -16,7 +21,7 @@ by password created by you. No 3rd party included
 <img align="left" width="30px" src="https://raw.githubusercontent.com/devicons/devicon/c7d326b6009e60442abc35fa45706d6f30ee4c8e/icons/express/express-original.svg"/>
 <img align="left" width="30px" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg"/>
 <img align="left" width="30px" src="https://avatars.githubusercontent.com/u/41653701?s=400&v=4"/>
-<br>
+<br><br>
 
 ## How to Create your own Passwords PWA
 
@@ -58,3 +63,8 @@ Deploy the project
 9. Passwords_App_Username 
 	create user by hitting at create user route using api testing tools like postman. 
 	You would require to pass username and password. Paste the same username here.
+```
+
+<p align="center">
+Made with ❤️ by Rupesh
+</p>
