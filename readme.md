@@ -20,10 +20,10 @@ by password created by you. No 3rd party included
 
 ## How to Create your own Passwords PWA
 
-Fork the repo
-clone the forked repo
-ADD your own credentials to the .env && nodemon.json
-Deploy the project
+Fork the repo \n
+clone the forked repo \n
+ADD your own credentials to the .env && nodemon.json\n
+Deploy the project\n
 
 ```diff
  **Environment Variables to be edited :** 
