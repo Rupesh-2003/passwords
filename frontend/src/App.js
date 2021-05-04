@@ -14,9 +14,6 @@ const App = () => {
         <Route path="/home" exact>
           <Home/>
         </Route>
-        {/* <Route path="/" exact>
-          <Login/>
-        </Route> */}
         <Redirect to="/home"/>
       </Switch>
     )
@@ -24,9 +21,6 @@ const App = () => {
   else {
     routes = (
       <Switch>
-        {/* <Route path="/home" exact>
-          <Home/>
-        </Route> */}
         <Route path="/" exact>
           <Login/>
         </Route>

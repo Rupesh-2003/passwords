@@ -4,7 +4,7 @@ const Bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const NodeRSA = require('node-rsa')
 
-const userName = 'public'
+const userName = process.env.Passwords_App_Username
 
 const createUser = async (req, res, next) => {
     const { name, password } = req.body
@@ -39,7 +39,7 @@ const login = async (req, res, next) => {
     try {
         if(await Bcrypt.compare(password, user.password)) {
             const yz = {
-                name: 'public'
+                name: userName
             }
             const accessToken = jwt.sign(yz, process.env.JWT_KEY)
             return res.status(200).json({
@@ -129,7 +129,7 @@ const editPassword = async (req, res, next) => {
 
             //newPassword is different from old password
             await User.updateOne(
-                    {name: 'public', 'passwordList.title' : title, 'passwordList.username': oldUsername},
+                    {name: userName, 'passwordList.title' : title, 'passwordList.username': oldUsername},
                     {$set: {'passwordList.$.password': encryptedPassword}}
                 )
             
@@ -145,7 +145,7 @@ const editPassword = async (req, res, next) => {
         //detailed: no other password has same username as newUsername and current userpassword of 
         //requested password is different from newUserpassword 
         await User.updateOne(
-            {name: 'public', 'passwordList.title' : title, 'passwordList.username': oldUsername},
+            {name: userName, 'passwordList.title' : title, 'passwordList.username': oldUsername},
             {$set: {'passwordList.$.username': newUsername, 'passwordList.$.password': encryptedPassword}}
         )
 

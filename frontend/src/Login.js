@@ -188,7 +188,7 @@ const Login = () => {
 
             var current = new Date()
 
-            var apikey = 'fa6fe7305eba47f7b62d139d57fea61c';
+            var apikey = process.env.REACT_APP_OPENCAGE_API_KEY ;
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
           
