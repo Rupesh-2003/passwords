@@ -1,0 +1,12 @@
+{
+    "env":{
+        "DB_USER": "",
+        "DB_PASSWORD": "",
+        "DB_CLUSTER_NAME": "",
+        "DB_NAME": "",
+        "JWT_KEY": "",
+        "PUBLIC_KEY": "",
+        "PRIVATE_KEY": "",
+        "Passwords_App_Username": ""
+    }
+}
