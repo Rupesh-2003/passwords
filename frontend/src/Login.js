@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
-import platform from 'platform'
 
 import styled, { keyframes } from 'styled-components'
 import Loader from './loader'
@@ -153,118 +152,119 @@ const WarningDiv = styled.div`
 
 const Login = () => {
 
-    const [locationPermission, setLocationPermission] = useState(false)
+    //this code if for CollectingLocation and storing Log in DB
+    // const [locationPermission, setLocationPermission] = useState(false)
 
     
-    useEffect(() => {
-        var ipAddress;
-        const fetchIp = async () => {
-            try {
-                const response = await fetch('https://api.ipify.org/?format=json', {
-                    method: 'GET'
-                })
-                const data = await response.json()
-                if(response.ok) {
-                    ipAddress = data.ip
-                }
-            } catch(error) {
-                console.log(error)
-            }
-        }
-        // fetchIp()
+    // useEffect(() => {
+    //     var ipAddress;
+    //     const fetchIp = async () => {
+    //         try {
+    //             const response = await fetch('https://api.ipify.org/?format=json', {
+    //                 method: 'GET'
+    //             })
+    //             const data = await response.json()
+    //             if(response.ok) {
+    //                 ipAddress = data.ip
+    //             }
+    //         } catch(error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     // fetchIp()
 
-        // if permission is denied
-        function permissionDeniedhandler(err) {
-            if(err.code === 1) {
-                console.log("Error: Access is denied!");
-            } else if( err.code === 2) {
-                console.log("Error: Position is unavailable!");
-            }
-            setLocationPermission(false)
-        }
+    //     // if permission is denied
+    //     function permissionDeniedhandler(err) {
+    //         if(err.code === 1) {
+    //             console.log("Error: Access is denied!");
+    //         } else if( err.code === 2) {
+    //             console.log("Error: Position is unavailable!");
+    //         }
+    //         setLocationPermission(false)
+    //     }
 
-        // if permission is given
-        function permissionGivenHandler(position) {
+    //     // if permission is given
+    //     function permissionGivenHandler(position) {
 
-            var current = new Date()
+    //         var current = new Date()
 
-            var apikey = process.env.REACT_APP_OPENCAGE_API_KEY ;
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
+    //         var apikey = process.env.REACT_APP_OPENCAGE_API_KEY ;
+    //         var latitude = position.coords.latitude;
+    //         var longitude = position.coords.longitude;
           
-            var api_url = 'https://api.opencagedata.com/geocode/v1/json'
+    //         var api_url = 'https://api.opencagedata.com/geocode/v1/json'
           
-            var request_url = api_url
-              + '?'
-              + 'key=' + apikey
-              + '&q=' + encodeURIComponent(latitude + ',' + longitude)
-              + '&pretty=1'
-              + '&no_annotations=1';
+    //         var request_url = api_url
+    //           + '?'
+    //           + 'key=' + apikey
+    //           + '&q=' + encodeURIComponent(latitude + ',' + longitude)
+    //           + '&pretty=1'
+    //           + '&no_annotations=1';
           
-            // send request to get address from longitude and latitude
-            var request = new XMLHttpRequest();
-            request.open('GET', request_url, true);
+    //         // send request to get address from longitude and latitude
+    //         var request = new XMLHttpRequest();
+    //         request.open('GET', request_url, true);
           
-            request.onload = function() {
+    //         request.onload = function() {
 
-                var data;
+    //             var data;
 
-                if (request.status === 200){ 
-                    // Success!
-                    data = JSON.parse(request.responseText);
+    //             if (request.status === 200){ 
+    //                 // Success!
+    //                 data = JSON.parse(request.responseText);
             
-                } else if (request.status <= 500){ 
-                    // We reached our target server, but it returned an error
+    //             } else if (request.status <= 500){ 
+    //                 // We reached our target server, but it returned an error
                                         
-                    data = JSON.parse(request.responseText);
-                    console.log("unable to geocode! Response code: " + request.status);
-                    console.log('error msg: ' + data.status.message);
+    //                 data = JSON.parse(request.responseText);
+    //                 console.log("unable to geocode! Response code: " + request.status);
+    //                 console.log('error msg: ' + data.status.message);
 
-                } else {
-                    console.log("server error");
-                }
+    //             } else {
+    //                 console.log("server error");
+    //             }
 
                 
-                // console.log(log)
-                const saveLog = async () => {
+    //             // console.log(log)
+    //             const saveLog = async () => {
 
-                    await fetchIp()
-                    const log = {
-                        ipAddress: ipAddress,
-                        deviceDetails: platform.description,
-                        date: current.toLocaleDateString(),
-                        time: current.toLocaleTimeString(),
-                        latitude,
-                        longitude,
-                        location: data.results[0].formatted
-                    }
+    //                 await fetchIp()
+    //                 const log = {
+    //                     ipAddress: ipAddress,
+    //                     deviceDetails: platform.description,
+    //                     date: current.toLocaleDateString(),
+    //                     time: current.toLocaleTimeString(),
+    //                     latitude,
+    //                     longitude,
+    //                     location: data.results[0].formatted
+    //                 }
 
-                    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/saveLog`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            log: log
-                        })
-                    })
-                    if(!response.ok) {
-                        console.log('Saving log in DB failed')
-                    }
-                }
-                saveLog()
-            }
+    //                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/saveLog`, {
+    //                     method: 'POST',
+    //                     headers: {
+    //                         'Content-type': 'application/json'
+    //                     },
+    //                     body: JSON.stringify({
+    //                         log: log
+    //                     })
+    //                 })
+    //                 if(!response.ok) {
+    //                     console.log('Saving log in DB failed')
+    //                 }
+    //             }
+    //             saveLog()
+    //         }
           
-            request.onerror = function() {
-              // There was a connection error of some sort
-              console.log("unable to connect to server");        
-            };
+    //         request.onerror = function() {
+    //           // There was a connection error of some sort
+    //           console.log("unable to connect to server");        
+    //         };
           
-            request.send();
-            setLocationPermission(true)
-        }
-        navigator.geolocation.getCurrentPosition(permissionGivenHandler, permissionDeniedhandler)
-    }, [])
+    //         request.send();
+    //         setLocationPermission(true)
+    //     }
+    //     navigator.geolocation.getCurrentPosition(permissionGivenHandler, permissionDeniedhandler)
+    // }, [])  
 
     let history = useHistory()
 
@@ -276,7 +276,8 @@ const Login = () => {
     //sending login request to backend
     const onLoginHandler = async () => {
         setLoading(true)
-        if(password && locationPermission) {
+        // if(password && locationPermission) {
+        if(password) {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, {
                     method: "POST",
@@ -299,14 +300,14 @@ const Login = () => {
                 console.log(err)
             }
         }
-        else if(!password) {
+        else {
             setLoginError("Password can't be blank !")
         }
-        else {
-            setLoginError('Please Enable location !')
-        }
+        // else {
+        //     setLoginError('Please Enable location !')
+        // }
         setLoading(false)
-        console.log(loginError)
+        // console.log(loginError)
     }
 
     useEffect(() => {
@@ -355,7 +356,7 @@ const Login = () => {
         </center>
                 {loginError && 
                 <WarningDiv>
-                    {loginError}
+                    {loginError}!
                 </WarningDiv>}
         <center>
         <Copyright>@ 2021</Copyright>

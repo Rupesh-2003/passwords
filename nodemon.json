@@ -1,12 +1,12 @@
 {
     "env":{
-        "DB_USER": "",
-        "DB_PASSWORD": "",
-        "DB_CLUSTER_NAME": "",
-        "DB_NAME": "",
-        "JWT_KEY": "",
-        "PUBLIC_KEY": "",
-        "PRIVATE_KEY": "",
-        "Passwords_App_Username": ""
+        "DB_USER": "rupesh",
+        "DB_PASSWORD": "80EfROcXMBhQ1daS",
+        "DB_CLUSTER_NAME": "cluster0.zhgqg",
+        "DB_NAME": "PasswordKeeper",
+        "JWT_KEY": "50e532ed8243da78551a7b7f1a56ec17b77247166e9829971d77f37d6c6617cf5925838412efb0fc869d504c4d6031cd03811d1c529daee2635e5130d3c2209e",
+        "PUBLIC_KEY": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCEpS+XZCfhdBVl8EcyjF5zSyUN\ny51cgWywD/qCV8+JPzz1vj5vdc3jhAd+dLd/jEoo1WnTA+HFRS2VLQqzW1uQ2sDX\n1MGuqJOOixx74obLg4ss6o5fpQsYmkzJRsuTtFMyg/mekhuL5S6F+28vO6j0SCXd\nLHPfK2JB34OlVSIWLwIDAQAB\n-----END PUBLIC KEY-----",
+        "PRIVATE_KEY": "-----BEGIN RSA PRIVATE KEY-----\nMIICXAIBAAKBgQCEpS+XZCfhdBVl8EcyjF5zSyUNy51cgWywD/qCV8+JPzz1vj5v\ndc3jhAd+dLd/jEoo1WnTA+HFRS2VLQqzW1uQ2sDX1MGuqJOOixx74obLg4ss6o5f\npQsYmkzJRsuTtFMyg/mekhuL5S6F+28vO6j0SCXdLHPfK2JB34OlVSIWLwIDAQAB\nAoGAL8SQ8/MEjaNRRWmXKjP0m453JJWr8LFHI8xNSX035tQYLuM49si0wXc9f6Om\npU8vMa9RMcWXG4SDGtKipN6EhYUAC4lMAvgFm0v9/U0qP8DqErvv8tO8nqjUyNyY\nQW5SpZJml3iXJy4royFo4IWeoo1yP0RqOzPnaBvsx858aMECQQD/Lv36ZI9rUYlq\nrpV1o/nW9v1AQS2QPPowlRJbacRatdMA14SmUwRy3vtKcpSxtsrMmeGYEPz3alDd\nc8axbs6hAkEAhRHUMq9W4k93gztDXFlmONUZM3RViyQcCFbdcaJT31Xvl6dpiTiB\nUICqIB04qTdU297Ne8psHwFpJVOnzhPCzwJARBT4g+6CaSKG5CSSEaHfDWA2Lwd0\nrY/nPED5ddQhJAZwtj/Jz0pE3JTrPHCXhVZ8gtvnWVfm9eeyjXLPJxWmIQJAPWYX\nkfdjUHK4Qz3x+8doKirxQNOZsOTNZm+mJ4ttxaviLAhb4qvGxv1HAiBZh4J3TigE\niezBbKD7AfUShTyK8wJBALEpsWrzLG0DxC7SPakeEhR7CJyBhqXCubbLGe4oGjrz\n0OK6OGpcDk2rsSa31frIeFqYwKfiwJrXZfsedQGpqjU=\n-----END RSA PRIVATE KEY-----",
+        "Passwords_App_Username": "public"
     }
 }

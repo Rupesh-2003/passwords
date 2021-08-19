@@ -18,7 +18,12 @@ by password created by you. No 3rd party included
 <img align="left" width="30px" src="https://avatars.githubusercontent.com/u/41653701?s=400&v=4"/>
 <br>
 
-## How to run Passwords locally
+## How to Create your own Passwords PWA
+
+Fork the repo
+clone the forked repo
+ADD your own credentials to the .env && nodemon.json
+Deploy the project
 
 ```diff
  **Environment Variables to be edited :** 
@@ -26,6 +31,8 @@ by password created by you. No 3rd party included
 -Frontend
 1. REACT_APP_OPENCAGE_API_KEY
 	visit https://opencagedata.com , signup and get your API Key
+2. REACT_APP_BACKEND_URL
+	after deploying the project add the app url in .env.production
 
 -Backend
 2. DB_USER
