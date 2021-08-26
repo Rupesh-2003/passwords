@@ -1,6 +1,9 @@
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
-
-import './App.css';
+import { 
+  BrowserRouter as Router, 
+  Redirect, 
+  Route, 
+  Switch 
+} from 'react-router-dom'
 import Login from './Login'
 import Home from './Home'
 
@@ -11,9 +14,7 @@ const App = () => {
   if(JSON.parse(sessionStorage.getItem('loggedIn'))) {
     routes = (
       <Switch>
-        <Route path="/home" exact>
-          <Home/>
-        </Route>
+        <Route path="/home" component={Home} exact/>
         <Redirect to="/home"/>
       </Switch>
     )
@@ -21,9 +22,7 @@ const App = () => {
   else {
     routes = (
       <Switch>
-        <Route path="/" exact>
-          <Login/>
-        </Route>
+        <Route path="/" component={Login} exact/>
         <Redirect to="/"/>
       </Switch>
     )

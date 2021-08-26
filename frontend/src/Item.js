@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled  from 'styled-components'
-
 import { RotatePlus, RotatePlus2 } from './Keyframes'
 
 const Container = styled.li`
@@ -252,16 +251,34 @@ const Item = (props) => {
                     </Confirmation>}
                 </Sublist>  
             }
-            {open && editMode && <Sublist>
-                <Input  defaultValue={username} 
+            {open && editMode && 
+                <Sublist>
+                    <Input  
+                        defaultValue={username} 
                         onChange={(e) => {setUsername(e.target.value.split(' ').join(''))}}
-                        dark={props.darkMode}/>
-                <Input  defaultValue={password} 
+                        dark={props.darkMode}
+                    />
+                    <Input 
+                        defaultValue={password} 
                         onChange={(e) => {setPassword(e.target.value.split(' ').join(''))}}
-                        dark={props.darkMode}/>
-            </Sublist>}
-        {open && <Edit src={editMode?'right.svg': props.darkMode ? 'pen.png' : 'pen.svg'} width="15px" height="15px" onClick={onEditButtonHandler}/>}
-        {open && <Delete src={props.darkMode ? 'dustbin2.svg' : 'dustbin.svg'} onClick={onDeleteHandler}/>}
+                        dark={props.darkMode}
+                    />
+                </Sublist>
+            }
+            {open && 
+                <Edit 
+                    src={editMode?'right.svg': props.darkMode ? 'pen.png' : 'pen.svg'} 
+                    width="15px" 
+                    height="15px" 
+                    onClick={onEditButtonHandler}
+                />
+            }
+            {open && 
+                <Delete 
+                    src={props.darkMode ? 'dustbin2.svg' : 'dustbin.svg'} 
+                    onClick={onDeleteHandler}
+                />
+            }
         </Container>
     )
 }

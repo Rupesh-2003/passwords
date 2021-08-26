@@ -17,3 +17,11 @@ export const RotatePlus2 = keyframes`
         transform: rotate(0deg)
     }
 `
+export const Slide = keyframes`
+    0% {
+      transform: translateX(-100px);
+    }
+    100% {
+      transform: skew(0deg);
+    }
+`
