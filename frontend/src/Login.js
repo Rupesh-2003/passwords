@@ -149,6 +149,13 @@ const WarningDiv = styled.div`
         color: black;
     }  
 `
+const PasswordContainer = styled.div`
+    margin-top: 30px;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 500;
+    color: #404040;
+`
 
 const Login = () => {
 
@@ -360,6 +367,7 @@ const Login = () => {
                 </WarningDiv>}
         <center>
         <Copyright>@ 2021</Copyright>
+        <PasswordContainer>password : testing</PasswordContainer>
         </center>
         </LoginContainer>
     )
